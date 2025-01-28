@@ -4,7 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -18,6 +20,13 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
+  private Spark leftMotor1 = new Spark(3);
+  private Spark leftMotor2 = new Spark(2);
+  private Spark rightMotor1 = new Spark(4);
+  private Spark rightMotor2 = new Spark(6);
+
+  private Joystick joy1 = new Joystick(0);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -76,7 +85,18 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    double speed = -joy1.getRawAxis(1) * 0.6;
+    double turn = joy1.getRawAxis(4) * 0.3;
+
+    double left = speed + turn;
+    double right = speed - turn;
+
+    leftMotor1.set(left);
+    leftMotor2.set(left);
+    rightMotor1.set(-right);
+    rightMotor2.set(-right);
+  }
 
   /** This function is called once when the robot is disabled. */
   @Override
