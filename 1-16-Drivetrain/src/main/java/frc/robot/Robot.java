@@ -21,10 +21,10 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-  private Spark leftMotor1 = new Spark(3);
-  private Spark leftMotor2 = new Spark(2);
-  private Spark rightMotor1 = new Spark(4);
-  private Spark rightMotor2 = new Spark(6);
+  private Spark leftMotorFront = new Spark(3);
+  private Spark leftMotorBack = new Spark(2);
+  private Spark rightMotorFront = new Spark(4);
+  private Spark rightMotorBack = new Spark(6);
 
   private Joystick joy1 = new Joystick(0);
 
@@ -92,10 +92,10 @@ public class Robot extends TimedRobot {
     double left = speed + turn;
     double right = speed - turn;
 
-    leftMotor1.set(left);
-    leftMotor2.set(left);
-    rightMotor1.set(-right);
-    rightMotor2.set(-right);
+    leftMotorFront.set(left);
+    leftMotorBack.set(left);
+    rightMotorFront.set(-right);
+    rightMotorBack.set(-right);
   }
 
   /** This function is called once when the robot is disabled. */
