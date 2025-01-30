@@ -6,7 +6,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,14 +21,13 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-  private Spark leftMotorFront = new Spark(3);
-  private Spark leftMotorBack = new Spark(2);
-  private Spark rightMotorFront = new Spark(4);
-  private Spark rightMotorBack = new Spark(6);
+  private Spark leftMotorFront = new Spark(0);
+  private Spark leftMotorBack = new Spark(1);
+  private Spark rightMotorFront = new Spark(2);
+  private Spark rightMotorBack = new Spark(3);
 
   private Joystick joy1 = new Joystick(0);
 
-  double startTime; 
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -62,26 +60,23 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    startTime = Timer.getFPGATimestamp();
+    m_autoSelected = m_chooser.getSelected();
+    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
+    System.out.println("Auto selected: " + m_autoSelected);
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    double time = Timer.getFPGATimestamp();
-
-    if (time - startTime < 3) {
-      leftMotorFront.set(0.6);
-      leftMotorBack.set(0.6);
-      rightMotorFront.set(-0.6);
-      rightMotorBack.set(-0.6);
-    } else{
-      leftMotorFront.set(0);
-      leftMotorBack.set(0);
-      rightMotorFront.set(0);
-      rightMotorBack.set(0);
+    switch (m_autoSelected) {
+      case kCustomAuto:
+        // Put custom auto code here
+        break;
+      case kDefaultAuto:
+      default:
+        // Put default auto code here
+        break;
     }
-    
   }
 
   /** This function is called once when teleop is enabled. */
