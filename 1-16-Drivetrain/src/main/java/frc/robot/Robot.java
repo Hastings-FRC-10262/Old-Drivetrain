@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,6 +29,7 @@ public class Robot extends TimedRobot {
 
   private Joystick joy1 = new Joystick(0);
 
+  double startTime;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -60,6 +62,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    startTime = Timer.getFPGATimestamp();
+
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
@@ -68,15 +72,37 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
+    double time = Timer.getFPGATimestamp();
     switch (m_autoSelected) {
       case kCustomAuto:
-        // Put custom auto code here
+        if (time - startTime < 0 && 5 < time - startTime) { // spinnnnn
+          leftMotorFront.set(0.2);
+          leftMotorBack.set(0.2);
+          rightMotorFront.set(0.2);
+          rightMotorBack.set(0.2);
+        } if (time - startTime < 10 && 5 < time - startTime) { //forwards I think
+          leftMotorFront.set(0.2);
+          leftMotorBack.set(0.2);
+          rightMotorFront.set(-0.2);
+          rightMotorBack.set(-0.2);
+        }if (time - startTime < 15 && 10 < time - startTime) { //Backwards?????
+          leftMotorFront.set(-0.2);
+          leftMotorBack.set(-0.2);
+          rightMotorFront.set(0.2);
+          rightMotorBack.set(0.2);
+        } else { // Stop
+          leftMotorFront.set(0);
+          leftMotorBack.set(0);
+          rightMotorFront.set(0);
+          rightMotorBack.set(0);
+        }
         break;
       case kDefaultAuto:
       default:
         // Put default auto code here
         break;
     }
+
   }
 
   /** This function is called once when teleop is enabled. */
@@ -86,8 +112,8 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    double speed = -joy1.getRawAxis(1) * 0.6;
-    double turn = joy1.getRawAxis(4) * 0.3;
+    double speed = joy1.getRawAxis(1) * 0.6;
+    double turn = -joy1.getRawAxis(4) * 0.3;
 
     double left = speed + turn;
     double right = speed - turn;
