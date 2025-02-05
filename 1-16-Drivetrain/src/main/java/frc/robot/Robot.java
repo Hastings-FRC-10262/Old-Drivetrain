@@ -64,6 +64,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     startTime = Timer.getFPGATimestamp();
 
+    System.out.println("auto init");
     //m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     //System.out.println("Auto selected: " + m_autoSelected);
