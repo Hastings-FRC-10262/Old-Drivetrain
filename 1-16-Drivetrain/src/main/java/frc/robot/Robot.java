@@ -64,44 +64,53 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     startTime = Timer.getFPGATimestamp();
 
-    m_autoSelected = m_chooser.getSelected();
+    //m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
+    //System.out.println("Auto selected: " + m_autoSelected);
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
+    
+    
+    System.out.println("auto periodic running");
+    
     double time = Timer.getFPGATimestamp();
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        if (time - startTime < 0 && 5 < time - startTime) { // spinnnnn
-          leftMotorFront.set(0.2);
-          leftMotorBack.set(0.2);
-          rightMotorFront.set(0.2);
-          rightMotorBack.set(0.2);
-        } if (time - startTime < 10 && 5 < time - startTime) { //forwards I think
-          leftMotorFront.set(0.2);
-          leftMotorBack.set(0.2);
-          rightMotorFront.set(-0.2);
-          rightMotorBack.set(-0.2);
-        }if (time - startTime < 15 && 10 < time - startTime) { //Backwards?????
-          leftMotorFront.set(-0.2);
-          leftMotorBack.set(-0.2);
-          rightMotorFront.set(0.2);
-          rightMotorBack.set(0.2);
-        } else { // Stop
-          leftMotorFront.set(0);
-          leftMotorBack.set(0);
-          rightMotorFront.set(0);
-          rightMotorBack.set(0);
-        }
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
-    }
+    //switch (m_autoSelected) {
+    //  case kCustomAuto:
+    //
+    //  System.out.println("custom auto");
+    //   
+    //    break;
+    //  case kDefaultAuto:
+    //  default:
+    //
+    //  System.out.println("it did smth");
+    //
+    //  System.out.println(time);
+
+    if (time < 2 && 0 < time ) { //forwards I think
+      
+      leftMotorFront.set(0.5);
+      leftMotorBack.set(0.5);
+      rightMotorFront.set(-0.5);
+      rightMotorBack.set(-0.5);
+    }if (time  < 4 && 2 < time ) { //Backwards?????
+      leftMotorFront.set(-0.2);
+      leftMotorBack.set(-0.2);
+      rightMotorFront.set(0.2);
+      rightMotorBack.set(0.2);
+    }if (time  < 6 && 4 < time ) { // spinnnnn
+      
+      leftMotorFront.set(0.2);
+      leftMotorBack.set(0.2);
+      rightMotorFront.set(0.2);
+      rightMotorBack.set(0.2);
+    } 
+    // Put default auto code here
+    //break;
+
 
   }
 
@@ -112,6 +121,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    System.out.println("Teleop");
     double speed = joy1.getRawAxis(1) * 0.6;
     double turn = -joy1.getRawAxis(4) * 0.3;
 
