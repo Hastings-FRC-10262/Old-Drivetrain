@@ -30,6 +30,7 @@ public class Robot extends TimedRobot {
   private Joystick joy1 = new Joystick(0);
 
   double startTime;
+  double timeSinceStart;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -62,6 +63,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    
     startTime = Timer.getFPGATimestamp();
 
     System.out.println("auto init");
@@ -74,10 +76,11 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     
+    timeSinceStart = Timer.getFPGATimestamp() - startTime;
     
     //System.out.println("auto periodic running");
     
-    double time = Timer.getFPGATimestamp();
+    
     switch (m_autoSelected) {
       case kCustomAuto:
     
@@ -86,21 +89,19 @@ public class Robot extends TimedRobot {
       break;
       case kDefaultAuto:
       default:
+       
         System.out.println("default auto");
-        System.out.println(time);
-
-        if (time < 2 && 0 < time ) { //backwards
+        if (timeSinceStart < 2 && 0 < timeSinceStart ) { //forwards I think
           leftMotorFront.set(0.5);
           leftMotorBack.set(0.5);
           rightMotorFront.set(-0.5);
           rightMotorBack.set(-0.5);
-        }if (time  < 4 && 2 < time ) { //forwards
+        }if (timeSinceStart  < 4 && 2 < timeSinceStart ) { //Backwards?????
           leftMotorFront.set(-0.2);
           leftMotorBack.set(-0.2);
           rightMotorFront.set(0.2);
           rightMotorBack.set(0.2);
-        }if (time  < 6 && 4 < time ) { // spinnnnn
-          
+        }if (timeSinceStart  < 6 && 4 < timeSinceStart ) { // spinnnnn
           leftMotorFront.set(0.2);
           leftMotorBack.set(0.2);
           rightMotorFront.set(0.2);
