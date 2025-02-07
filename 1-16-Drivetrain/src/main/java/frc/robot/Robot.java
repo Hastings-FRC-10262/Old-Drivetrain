@@ -87,12 +87,14 @@ public class Robot extends TimedRobot {
       case kDefaultAuto:
       default:
         System.out.println("default auto");
-        if (time < 2 && 0 < time ) { //forwards I think
+        System.out.println(time);
+
+        if (time < 2 && 0 < time ) { //backwards
           leftMotorFront.set(0.5);
           leftMotorBack.set(0.5);
           rightMotorFront.set(-0.5);
           rightMotorBack.set(-0.5);
-        }if (time  < 4 && 2 < time ) { //Backwards?????
+        }if (time  < 4 && 2 < time ) { //forwards
           leftMotorFront.set(-0.2);
           leftMotorBack.set(-0.2);
           rightMotorFront.set(0.2);
