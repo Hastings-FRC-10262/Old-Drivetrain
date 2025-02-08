@@ -3,20 +3,22 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import com.studica.frc.AHRS;
+import com.studica.frc.AHRS.BoardYawAxis;
+import com.studica.frc.AHRS.NavXComType;
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
  * the TimedRobot documentation. If you change the name of this class or the package after creating
  * this project, you must also update the Main.java file in the project.
  */
 public class Robot extends TimedRobot {
+  
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
@@ -39,6 +41,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    
   }
 
   /**
@@ -75,7 +78,10 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    
+    final AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
+    BoardYawAxis temp=gyro.getBoardYawAxis();
+    System.out.println(temp);
+    gyro.close();
     timeSinceStart = Timer.getFPGATimestamp() - startTime;
     
     //System.out.println("auto periodic running");
