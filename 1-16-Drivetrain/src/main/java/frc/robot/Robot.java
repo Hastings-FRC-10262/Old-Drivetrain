@@ -123,16 +123,13 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     System.out.println("Teleop");
-    double speed = joy1.getRawAxis(1) * 0.6;
-    double turn = -joy1.getRawAxis(4) * 0.3;
+    double leftSpeed = joy1.getRawAxis(1) * 0.6;
+    double rightSpeed = -joy1.getRawAxis(3) * 0.6;
 
-    double left = speed + turn;
-    double right = speed - turn;
-
-    leftMotorFront.set(left);
-    leftMotorBack.set(left);
-    rightMotorFront.set(-right);
-    rightMotorBack.set(-right);
+    leftMotorFront.set(leftSpeed);
+    leftMotorBack.set(leftSpeed);
+    rightMotorFront.set(-rightSpeed);
+    rightMotorBack.set(-rightSpeed);
   }
 
   /** This function is called once when the robot is disabled. */
