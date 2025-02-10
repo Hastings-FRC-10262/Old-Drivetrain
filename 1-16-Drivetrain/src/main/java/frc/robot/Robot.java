@@ -39,6 +39,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+
   }
 
   /**
@@ -49,7 +50,13 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    SmartDashboard.putNumber("timeSinceStart", timeSinceStart);
+    SmartDashboard.putNumber("Left Motor Front", leftMotorFront.get());
+    SmartDashboard.putNumber("Left Motor Back", leftMotorBack.get());
+    SmartDashboard.putNumber("Right Motor Front", rightMotorFront.get());
+    SmartDashboard.putNumber("Right Motor Back", rightMotorBack.get());
+  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select between different
