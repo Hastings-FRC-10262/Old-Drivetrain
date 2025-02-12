@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -31,8 +32,12 @@ public class Robot extends TimedRobot {
 
   private Joystick joy1 = new Joystick(0);
 
+  AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
+
   double startTime;
   double timeSinceStart;
+
+  Encoder encoder = new Encoder(9, 8);
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -40,7 +45,7 @@ public class Robot extends TimedRobot {
   public Robot() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
+    
     
   }
 
@@ -52,7 +57,23 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    SmartDashboard.putNumber("Left Front Motot", leftMotorFront.get());
+    SmartDashboard.putNumber("Left Back Motor", leftMotorBack.get());
+    SmartDashboard.putNumber("Right Front Motor", rightMotorFront.get());
+    SmartDashboard.putNumber("Right Back Motor", rightMotorBack.get());
+
+    SmartDashboard.putNumber("angle", gyro.getAngle());
+    SmartDashboard.putNumber("x displacment", gyro.getDisplacementX());
+    System.out.println("Encoder Rotation: " + encoder);
+
+    System.out.println("Angle: " + gyro.getAngle());
+    System.out.println("X Displacement: " + (gyro.getDisplacementX() * 100));
+    //System.out.println("Y Displacement: ");
+    
+    
+    
+  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select between different
@@ -78,9 +99,9 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    final AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
+    
     BoardYawAxis temp=gyro.getBoardYawAxis();
-    System.out.println(temp);
+    //System.out.println(temp);
     gyro.close();
     timeSinceStart = Timer.getFPGATimestamp() - startTime;
     
@@ -96,7 +117,7 @@ public class Robot extends TimedRobot {
       case kDefaultAuto:
       default:
        
-        System.out.println("default auto");
+        //System.out.println("default auto");
         if (timeSinceStart < 2 && 0 < timeSinceStart ) { //forwards I think
           leftMotorFront.set(0.5);
           leftMotorBack.set(0.5);
@@ -113,7 +134,7 @@ public class Robot extends TimedRobot {
           rightMotorFront.set(0.2);
           rightMotorBack.set(0.2);
         }
-        System.out.println("it did smth");
+        //System.out.println("it did smth");
     
       break;
     } 
@@ -128,7 +149,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    System.out.println("Teleop");
+    //System.out.println("Teleop");
     double speed = joy1.getRawAxis(1) * 0.6;
     double turn = -joy1.getRawAxis(4) * 0.3;
 
