@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
   private Spark rightMotorBack = new Spark(3);
 
   private Joystick joy1 = new Joystick(0);
-
+  AHRS ahrs;
   double startTime;
   double timeSinceStart;
   /**
@@ -41,6 +41,9 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    AHRS.BoardYawAxis yaw_axis = ahrs.getBoardYawAxis();
+    SmartDashboard.putString(   "YawAxisDirection",     yaw_axis.up ? "Up" : "Down" );
+    SmartDashboard.putNumber(   "YawAxis",              yaw_axis.board_axis.getValue());
     
   }
 
@@ -78,10 +81,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    final AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
-    BoardYawAxis temp=gyro.getBoardYawAxis();
-    System.out.println(temp);
-    gyro.close();
     timeSinceStart = Timer.getFPGATimestamp() - startTime;
     
     //System.out.println("auto periodic running");
