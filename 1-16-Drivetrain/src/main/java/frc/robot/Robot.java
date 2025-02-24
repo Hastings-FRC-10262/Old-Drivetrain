@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.studica.frc.AHRS;
-import com.studica.frc.AHRS.BoardYawAxis;
-import com.studica.frc.AHRS.NavXComType;
+//import com.studica.frc.AHRS;
+//import com.studica.frc.AHRS.BoardYawAxis;
+//import com.studica.frc.AHRS.NavXComType;
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
  * the TimedRobot documentation. If you change the name of this class or the package after creating
@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
 
   private Joystick joy1 = new Joystick(0);
 
-  AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
+  //AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
 
   double startTime;
   double timeSinceStart;
@@ -63,12 +63,12 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Right Front Motor", rightMotorFront.get());
     SmartDashboard.putNumber("Right Back Motor", rightMotorBack.get());
 
-    SmartDashboard.putNumber("angle", gyro.getAngle());
-    SmartDashboard.putNumber("x displacment", gyro.getDisplacementX());
+    //SmartDashboard.putNumber("angle", gyro.getAngle());
+    //SmartDashboard.putNumber("x displacment", gyro.getDisplacementX());
     System.out.println("Encoder Rotation: " + encoder);
 
-    System.out.println("Angle: " + gyro.getAngle());
-    System.out.println("X Displacement: " + (gyro.getDisplacementX() * 100));
+    //System.out.println("Angle: " + gyro.getAngle());
+    //System.out.println("X Displacement: " + (gyro.getDisplacementX() * 100));
     //System.out.println("Y Displacement: ");
     
     
@@ -100,9 +100,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     
-    BoardYawAxis temp=gyro.getBoardYawAxis();
+    //BoardYawAxis temp=gyro.getBoardYawAxis();
     //System.out.println(temp);
-    gyro.close();
+    //kgyro.close();
     timeSinceStart = Timer.getFPGATimestamp() - startTime;
     
     //System.out.println("auto periodic running");
